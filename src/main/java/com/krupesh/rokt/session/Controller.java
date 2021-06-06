@@ -20,7 +20,10 @@ public class Controller {
   }
 
   @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<SessionResponse> getSessions(@RequestParam String path, @RequestParam String fromDateTime, @RequestParam String toDateTime) {
-    return fetchSession.fetchSessions(path,  ZonedDateTime.parse(fromDateTime), ZonedDateTime.parse(toDateTime));
+  public List<SessionResponse> getSessions(@RequestParam String path,
+      @RequestParam String fromDateTime, @RequestParam String toDateTime) {
+
+    return fetchSession.fetchSessions(path, ZonedDateTime.parse(fromDateTime),
+        ZonedDateTime.parse(toDateTime));
   }
 }
