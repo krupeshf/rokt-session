@@ -34,7 +34,7 @@ public class ControllerTests {
 
   @Test
   public void givenValidRequest_returnsValidResponse() throws Exception {
-    when(mockService.fetchSessions("src/test/resources/sample1.txt",
+    when(mockService.fetchSessions(TestUtils.SAMPLE_FILE_LOCATION,
         ZonedDateTime.parse("2000-01-01T23:59:04Z"),
         ZonedDateTime.parse("2000-01-01T23:59:05Z")))
         .thenReturn(Collections.singletonList(SessionResponse.fromLineEntry(
@@ -42,7 +42,7 @@ public class ControllerTests {
 
     this.mockMvc.perform(
         get("/")
-            .param("path", "src/test/resources/sample1.txt")
+            .param("path", TestUtils.SAMPLE_FILE_LOCATION)
             .param("fromDateTime", "2000-01-01T23:59:04Z")
             .param("toDateTime", "2000-01-01T23:59:05Z")
     ).andExpect(status().isOk())
@@ -59,7 +59,7 @@ public class ControllerTests {
   void givenInvalidRequestParam_returnMissingServletRequestParameterException() throws Exception {
     this.mockMvc.perform(
         get("/")
-            .param("path", "src/test/resources/sample1.txt")
+            .param("path", TestUtils.SAMPLE_FILE_LOCATION)
             .param("invalidFromDateTimeRequestParam", "2000-01-01T23:59:04Z")
             .param("toDateTime", "2000-01-01T23:59:05Z")
     )
@@ -73,7 +73,7 @@ public class ControllerTests {
   void givenInvalidFromDate_returnMissingServletRequestParameterException() throws Exception {
     this.mockMvc.perform(
         get("/")
-            .param("path", "src/test/resources/sample1.txt")
+            .param("path", TestUtils.SAMPLE_FILE_LOCATION)
             .param("fromDateTime", "2000-13-01T23:59:05Z")
             .param("toDateTime", "2000-01-01T23:59:05Z")
     )
