@@ -4,6 +4,7 @@ import lombok.val;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
@@ -14,7 +15,7 @@ import java.util.Scanner;
 @Service
 public class LinearFetchService {
   public List<SessionResponse> fetchSessions(String pathToFile, ZonedDateTime fromDateTime,
-      ZonedDateTime toDateTime) {
+      ZonedDateTime toDateTime) throws IOException {
 
     SessionResponse sessionResponse;
 
@@ -41,8 +42,6 @@ public class LinearFetchService {
           }
         }
       }
-    } catch (IOException e) {
-      e.printStackTrace();
     }
     return sessionResponses;
   }

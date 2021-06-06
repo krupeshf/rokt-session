@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class Controller {
 
   @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<SessionResponse> getSessions(@RequestParam String path,
-      @RequestParam String fromDateTime, @RequestParam String toDateTime) {
+      @RequestParam String fromDateTime, @RequestParam String toDateTime) throws IOException {
 
     return fetchSession.fetchSessions(path, ZonedDateTime.parse(fromDateTime),
         ZonedDateTime.parse(toDateTime));
