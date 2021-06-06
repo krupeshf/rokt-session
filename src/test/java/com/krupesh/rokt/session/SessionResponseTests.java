@@ -6,7 +6,7 @@ import java.time.DateTimeException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SessionResponseTest {
+public class SessionResponseTests {
   @Test
   public void givenValidLine_parseSession() {
     SessionResponse response = SessionResponse.fromString(
