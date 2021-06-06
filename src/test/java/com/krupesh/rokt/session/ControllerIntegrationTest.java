@@ -13,6 +13,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,10 +28,10 @@ public class ControllerIntegrationTest {
   private int port;
 
   @Test
-  public void givenFromAndToDateTime_returnsAllIncludingTwoDates() throws IOException {
+  public void givenValidRequest_returnsResults() throws IOException {
 
     final String response = this.restTemplate.getForObject("http://localhost:" + port
-            + "/?path=src/test/resources/sample1.txt&fromDateTime=2000-01-01T23:59:04Z&toDateTime=2000-01-03T16:13:52Z",
+            + "/?path=src/test/resources/sample1.txt&fromDateTime=2000-01-03T16:13:52Z&toDateTime=2000-01-03T16:13:53Z",
         String.class);
 
     final ObjectMapper objectMapper = new ObjectMapper();
@@ -39,8 +40,11 @@ public class ControllerIntegrationTest {
     JsonNode node = objectMapper.readTree(response);
     ObjectReader reader = objectMapper.readerFor(new TypeReference<List<SessionResponse>>() {});
 
-    List<String> list = reader.readValue(node);
+    List<SessionResponse> list = reader.readValue(node);
 
-    assertEquals(4, list.size());
+    assertEquals(1, list.size());
+    assertEquals("2000-01-03T16:13:52Z", list.get(0).getEventTime().format(DateTimeFormatter.ISO_INSTANT));
+    assertEquals("clotilde@nolanbalistreri.uk", list.get(0).getEmail());
+    assertEquals("8be575ca-2fa6-43d3-bf69-608b70c8be18", list.get(0).getSessionId().toString());
   }
 }
