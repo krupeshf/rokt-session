@@ -27,10 +27,10 @@ public class ControllerIntegrationTest {
   private int port;
 
   @Test
-  public void getAllSessions() throws IOException {
+  public void givenFromAndToDateTime_returnsAllIncludingTwoDates() throws IOException {
 
     final String response = this.restTemplate.getForObject("http://localhost:" + port
-            + "/?path=/Users/krupeshf/temp/processSession/sample1.txt&fromDateTime=2020-12-04T11:14:23Z&toDateTime=2020-12-04T11:14:23Z",
+            + "/?path=src/test/resources/sample1.txt&fromDateTime=2000-01-01T23:59:04Z&toDateTime=2000-01-03T16:13:52Z",
         String.class);
 
     final ObjectMapper objectMapper = new ObjectMapper();
@@ -41,6 +41,6 @@ public class ControllerIntegrationTest {
 
     List<String> list = reader.readValue(node);
 
-    assertEquals(1000, list.size());
+    assertEquals(4, list.size());
   }
 }

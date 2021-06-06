@@ -16,11 +16,29 @@ public class LinearFetchService {
   public List<SessionResponse> fetchSessions(String pathToFile, ZonedDateTime fromDateTime,
       ZonedDateTime toDateTime) {
 
+    SessionResponse sessionResponse;
+
+    boolean startFetching = false;
+
     val sessionResponses = new ArrayList<SessionResponse>();
     try (FileInputStream inputStream = new FileInputStream(pathToFile)) {
       try (Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8);) {
         while (scanner.hasNextLine()) {
-          sessionResponses.add(SessionResponse.fromString(scanner.nextLine()));
+          sessionResponse = SessionResponse.fromString(scanner.nextLine());
+
+          if (!startFetching
+              && (sessionResponse.getEventTime().isEqual(fromDateTime)
+              || (sessionResponse.getEventTime().isAfter(fromDateTime)
+              && sessionResponse.getEventTime().isBefore(toDateTime)))) {
+            startFetching = true;
+          }
+
+          if (startFetching) {
+            if (sessionResponse.getEventTime().isAfter(toDateTime)) {
+              break;
+            }
+            sessionResponses.add(sessionResponse);
+          }
         }
       }
     } catch (IOException e) {
