@@ -24,7 +24,7 @@ public class LinearFetchService {
     try (FileInputStream inputStream = new FileInputStream(pathToFile)) {
       try (Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8);) {
         while (scanner.hasNextLine()) {
-          sessionResponse = SessionResponse.fromString(scanner.nextLine());
+          sessionResponse = SessionResponse.fromLineEntry(scanner.nextLine());
 
           if (!startFetching
               && (sessionResponse.getEventTime().isEqual(fromDateTime)

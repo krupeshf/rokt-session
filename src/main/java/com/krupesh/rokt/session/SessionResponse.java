@@ -17,7 +17,7 @@ public class SessionResponse {
   private String email;
   private UUID sessionId;
 
-  public static SessionResponse fromString(String plainSessionInfo) {
+  public static SessionResponse fromLineEntry(String plainSessionInfo) {
     val sessionDetails = plainSessionInfo.split(" ");
     return SessionResponse.builder()
         .eventTime(ZonedDateTime.parse(sessionDetails[0]))
