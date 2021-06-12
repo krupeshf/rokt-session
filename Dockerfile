@@ -9,4 +9,4 @@ EXPOSE 8080
 
 RUN mkdir /dumps
 
-CMD java -Xms512m -Xmx1024m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath="/dumps/" -jar api.jar
+CMD java -Xms128m -Xmx128m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath="/dumps/" -jar api.jar
